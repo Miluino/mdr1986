@@ -45,366 +45,563 @@ typedef enum
 	MDR_RST_CLK_STATUS_PLL_USB_TIMEOUT
 } MDR_RST_CLK_StatusTypeDef;
 
+
 /**
- * @brief CPU clock-tree initialization parameters.
+ * @brief CPU clock-tree configuration.
  */
 typedef struct
 {
-	uint32_t HSE_Mode;       /*!< HSE mode from @ref MDR_RST_CLK_HSE_Mode_Values. */
-	uint32_t CPU_C1_Source;  /*!< CPU_C1 source from @ref MDR_RST_CLK_CPU_C1_Values. */
-	uint32_t PLL_CPU_Mul;    /*!< CPU PLL multiplier from @ref MDR_RST_CLK_PLL_CPU_Mul_Values. */
-	uint32_t CPU_C2_Source;  /*!< CPU_C2 source from @ref MDR_RST_CLK_CPU_C2_Values. */
-	uint32_t CPU_C3_Div;     /*!< CPU_C3 divider from @ref MDR_RST_CLK_CPU_C3_Div_Values. */
-	uint32_t HCLK_Source;    /*!< HCLK source from @ref MDR_RST_CLK_HCLK_Values. */
-	uint32_t ReadyTimeout;   /*!< Maximum polling iterations while waiting for ready flags. */
+	uint32_t HSEMode;
+	uint32_t CPUC1Source;
+	uint32_t PLLCPUMultiplier;
+	uint32_t CPUC2Source;
+	uint32_t CPUC3Divider;
+	uint32_t HCLKSource;
+	uint32_t ReadyTimeout;
 } MDR_RST_CLK_CPU_InitTypeDef;
 
 /**
- * @brief USB clock-tree initialization parameters.
+ * @brief USB clock-tree configuration.
  */
 typedef struct
 {
-	uint32_t HSE_Mode;       /*!< HSE mode from @ref MDR_RST_CLK_HSE_Mode_Values. */
-	uint32_t USB_C1_Source;  /*!< USB_C1 source from @ref MDR_RST_CLK_USB_C1_Values. */
-	uint32_t PLL_USB_Mul;    /*!< USB PLL multiplier from @ref MDR_RST_CLK_PLL_USB_Mul_Values. */
-	uint32_t USB_C2_Source;  /*!< USB_C2 source from @ref MDR_RST_CLK_USB_C2_Values. */
-	uint32_t USB_C3_Div;     /*!< USB_C3 divider from @ref MDR_RST_CLK_USB_C3_Div_Values. */
-	uint32_t ReadyTimeout;   /*!< Maximum polling iterations while waiting for ready flags. */
+	uint32_t HSEMode;
+	uint32_t USBC1Source;
+	uint32_t PLLUSBMultiplier;
+	uint32_t USBC2Source;
+	uint32_t USBC3Divider;
+	uint32_t ReadyTimeout;
 } MDR_RST_CLK_USB_InitTypeDef;
-
-/**
- * @brief ADC clock-tree initialization parameters.
- */
-typedef struct
-{
-	uint32_t ADC_C1_Source;  /*!< ADC_C1 source from @ref MDR_RST_CLK_ADC_C1_Values. */
-	uint32_t ADC_C2_Source;  /*!< ADC_C2 source from @ref MDR_RST_CLK_ADC_C2_Values. */
-	uint32_t ADC_C3_Div;     /*!< ADC_C3 divider from @ref MDR_RST_CLK_ADC_C3_Div_Values. */
-} MDR_RST_CLK_ADC_InitTypeDef;
-
-/**
- * @brief UART clock selector.
- */
-typedef enum
-{
-	MDR_RST_CLK_UART_1 = 0,
-	MDR_RST_CLK_UART_2
-} MDR_RST_CLK_UART_TypeDef;
-
-/**
- * @brief General-purpose timer clock selector.
- */
-typedef enum
-{
-	MDR_RST_CLK_TIMER_1 = 0,
-	MDR_RST_CLK_TIMER_2,
-	MDR_RST_CLK_TIMER_3
-} MDR_RST_CLK_TIMER_TypeDef;
-
-/**
- * @brief CAN clock selector.
- */
-typedef enum
-{
-	MDR_RST_CLK_CAN_1 = 0,
-	MDR_RST_CLK_CAN_2
-} MDR_RST_CLK_CAN_TypeDef;
-
-/**
- * @brief SSP clock selector.
- */
-typedef enum
-{
-	MDR_RST_CLK_SSP_1 = 0,
-	MDR_RST_CLK_SSP_2
-} MDR_RST_CLK_SSP_TypeDef;
 
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup MDR_RST_CLK_Clock_Status_Bits Clock status bits
  * @{
  */
-#define MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Pos      0U
-#define MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Pos      1U
-#define MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Pos          2U
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Pos    0U
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Pos    1U
+#define MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Pos        2U
 
-#define MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Msk      (1UL << MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Pos)
-#define MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Msk      (1UL << MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Pos)
-#define MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Msk          (1UL << MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Pos)
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Msk    ( 1UL << MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Pos )
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Msk    ( 1UL << MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Pos )
+#define MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Msk        ( 1UL << MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Pos     )
+
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_RESET    ( 0UL << MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Pos )
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_SET      ( 1UL << MDR_RST_CLK_CLOCK_STATUS_PLL_USB_RDY_Pos )
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_RESET    ( 0UL << MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Pos )
+#define MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_SET      ( 1UL << MDR_RST_CLK_CLOCK_STATUS_PLL_CPU_RDY_Pos )
+#define MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_RESET        ( 0UL << MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Pos     )
+#define MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_SET          ( 1UL << MDR_RST_CLK_CLOCK_STATUS_HSE_RDY_Pos     )
 /** @} */
 
 /** @defgroup MDR_RST_CLK_PLL_Control_Bits PLL control bits
  * @{
  */
-#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Pos        0U
-#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Pos       1U
-#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Pos        2U
-#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Pos       3U
-#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos       4U
-#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos       8U
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Pos     0U
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Pos    1U
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Pos     2U
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Pos    3U
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos    4U
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos    8U
 
-#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Msk        (1UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Pos)
-#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Msk       (1UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Pos)
-#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Msk        (1UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Pos)
-#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Msk       (1UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Pos)
-#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Msk       (0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Msk       (0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Msk     ( 1UL    << MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Pos  )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Msk    ( 1UL    << MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Pos )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Msk     ( 1UL    << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Pos  )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Msk    ( 1UL    << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Pos )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Msk    ( 0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Msk    ( 0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_DISABLE     ( 0UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Pos  )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_ENABLE      ( 1UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_ON_Pos  )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_DISABLE    ( 0UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Pos )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_ENABLE     ( 1UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_RLD_Pos )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_DISABLE     ( 0UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Pos  )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_ENABLE      ( 1UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_ON_Pos  )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_DISABLE    ( 0UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Pos )
+#define MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_ENABLE     ( 1UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_RLD_Pos )
+
+#define MDR_RST_CLK_PLL_USB_MUL_4                  ( 0x03UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_5                  ( 0x04UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_6                  ( 0x05UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_7                  ( 0x06UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_8                  ( 0x07UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_9                  ( 0x08UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_10                 ( 0x09UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_11                 ( 0x0AUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_12                 ( 0x0BUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_13                 ( 0x0CUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_14                 ( 0x0DUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_15                 ( 0x0EUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+#define MDR_RST_CLK_PLL_USB_MUL_16                 ( 0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos )
+
+#define MDR_RST_CLK_PLL_CPU_MUL_4                  ( 0x03UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_5                  ( 0x04UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_6                  ( 0x05UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_7                  ( 0x06UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_8                  ( 0x07UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_9                  ( 0x08UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_10                 ( 0x09UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_11                 ( 0x0AUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_12                 ( 0x0BUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_13                 ( 0x0CUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_14                 ( 0x0DUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_15                 ( 0x0EUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
+#define MDR_RST_CLK_PLL_CPU_MUL_16                 ( 0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos )
 /** @} */
 
-/** @defgroup MDR_RST_CLK_HSE_Mode_Values HSE mode values
+#define IS_MDR_RST_CLK_PLL_CPU_MUL(MUL)    (((MUL) >= MDR_RST_CLK_PLL_CPU_MUL_4) && ((MUL) <= MDR_RST_CLK_PLL_CPU_MUL_16))
+#define IS_MDR_RST_CLK_PLL_USB_MUL(MUL)    (((MUL) >= MDR_RST_CLK_PLL_USB_MUL_4) && ((MUL) <= MDR_RST_CLK_PLL_USB_MUL_16))
+
+/** @defgroup MDR_RST_CLK_HS_Control_Bits HSE control bits
  * @{
  */
-#define MDR_RST_CLK_HSE_OSCILLATOR                    (0UL << 1U)  /*!< External crystal/resonator mode. */
-#define MDR_RST_CLK_HSE_BYPASS                        (1UL << 1U)  /*!< External clock generator on OSC_IN. */
-#define IS_MDR_RST_CLK_HSE_MODE(MODE)                 (((MODE) == MDR_RST_CLK_HSE_OSCILLATOR) || \
-                                                        ((MODE) == MDR_RST_CLK_HSE_BYPASS))
+#define MDR_RST_CLK_HS_CONTROL_HSE_ON_Pos     0U
+#define MDR_RST_CLK_HS_CONTROL_HSE_BYP_Pos    1U
+
+#define MDR_RST_CLK_HS_CONTROL_HSE_ON_Msk     ( 1UL << MDR_RST_CLK_HS_CONTROL_HSE_ON_Pos  )
+#define MDR_RST_CLK_HS_CONTROL_HSE_BYP_Msk    ( 1UL << MDR_RST_CLK_HS_CONTROL_HSE_BYP_Pos )
+
+#define MDR_RST_CLK_HS_CONTROL_HSE_ON_DISABLE     ( 0UL << MDR_RST_CLK_HS_CONTROL_HSE_ON_Pos  )
+#define MDR_RST_CLK_HS_CONTROL_HSE_ON_ENABLE      ( 1UL << MDR_RST_CLK_HS_CONTROL_HSE_ON_Pos  )
+#define MDR_RST_CLK_HS_CONTROL_HSE_BYP_OSCILLATOR ( 0UL << MDR_RST_CLK_HS_CONTROL_HSE_BYP_Pos )
+#define MDR_RST_CLK_HS_CONTROL_HSE_BYP_BYPASS     ( 1UL << MDR_RST_CLK_HS_CONTROL_HSE_BYP_Pos )
+
+#define MDR_RST_CLK_HSE_OSCILLATOR    MDR_RST_CLK_HS_CONTROL_HSE_BYP_OSCILLATOR
+#define MDR_RST_CLK_HSE_BYPASS        MDR_RST_CLK_HS_CONTROL_HSE_BYP_BYPASS
+#define IS_MDR_RST_CLK_HSE_MODE(MODE)    (((MODE) == MDR_RST_CLK_HSE_OSCILLATOR) || ((MODE) == MDR_RST_CLK_HSE_BYPASS))
 /** @} */
 
-#define MDR_RST_CLK_HS_CONTROL_HSE_ON_Msk             (1UL << 0U)
-#define MDR_RST_CLK_HS_CONTROL_HSE_BYP_Msk            (1UL << 1U)
-
-/** @defgroup MDR_RST_CLK_PLL_CPU_Mul_Values CPU PLL multiplier values
+/** @defgroup MDR_RST_CLK_CPU_Clock_Bits CPU clock fields
  * @{
  */
-#define MDR_RST_CLK_PLL_CPU_MUL_4                     (0x03UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_5                     (0x04UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_6                     (0x05UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_7                     (0x06UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_8                     (0x07UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_9                     (0x08UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_10                    (0x09UL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_11                    (0x0AUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_12                    (0x0BUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_13                    (0x0CUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_14                    (0x0DUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_15                    (0x0EUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define MDR_RST_CLK_PLL_CPU_MUL_16                    (0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_CPU_MUL_Pos)
-#define IS_MDR_RST_CLK_PLL_CPU_MUL(MUL)               (((MUL) >= MDR_RST_CLK_PLL_CPU_MUL_4) && \
-                                                        ((MUL) <= MDR_RST_CLK_PLL_CPU_MUL_16))
+#define MDR_RST_CLK_CPU_C1_Pos     0U
+#define MDR_RST_CLK_CPU_C2_Pos     2U
+#define MDR_RST_CLK_CPU_C3_Pos     4U
+#define MDR_RST_CLK_HCLK_Pos       8U
+
+#define MDR_RST_CLK_CPU_C1_Msk     ( 0x03UL << MDR_RST_CLK_CPU_C1_Pos )
+#define MDR_RST_CLK_CPU_C2_Msk     ( 0x01UL << MDR_RST_CLK_CPU_C2_Pos )
+#define MDR_RST_CLK_CPU_C3_Msk     ( 0x0FUL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_HCLK_Msk       ( 0x03UL << MDR_RST_CLK_HCLK_Pos   )
+
+#define MDR_RST_CLK_CPU_C1_HSI          ( 0x00UL << MDR_RST_CLK_CPU_C1_Pos )
+#define MDR_RST_CLK_CPU_C1_HSI_DIV_2    ( 0x01UL << MDR_RST_CLK_CPU_C1_Pos )
+#define MDR_RST_CLK_CPU_C1_HSE          ( 0x02UL << MDR_RST_CLK_CPU_C1_Pos )
+#define MDR_RST_CLK_CPU_C1_HSE_DIV_2    ( 0x03UL << MDR_RST_CLK_CPU_C1_Pos )
+
+#define MDR_RST_CLK_CPU_C2_CPU_C1     ( 0x00UL << MDR_RST_CLK_CPU_C2_Pos )
+#define MDR_RST_CLK_CPU_C2_PLL_CPU    ( 0x01UL << MDR_RST_CLK_CPU_C2_Pos )
+
+#define MDR_RST_CLK_CPU_C3_DIV_1              ( 0x00UL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_2              ( 0x08UL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_4              ( 0x09UL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_8              ( 0x0AUL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_16             ( 0x0BUL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_32             ( 0x0CUL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_64             ( 0x0DUL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_128            ( 0x0EUL << MDR_RST_CLK_CPU_C3_Pos )
+#define MDR_RST_CLK_CPU_C3_DIV_256            ( 0x0FUL << MDR_RST_CLK_CPU_C3_Pos )
+
+#define MDR_RST_CLK_HCLK_HSI       ( 0x00UL << MDR_RST_CLK_HCLK_Pos )
+#define MDR_RST_CLK_HCLK_CPU_C3    ( 0x01UL << MDR_RST_CLK_HCLK_Pos )
+#define MDR_RST_CLK_HCLK_LSE       ( 0x02UL << MDR_RST_CLK_HCLK_Pos )
+#define MDR_RST_CLK_HCLK_LSI       ( 0x03UL << MDR_RST_CLK_HCLK_Pos )
+
+#define IS_MDR_RST_CLK_CPU_C1(SOURCE)    (((SOURCE) == MDR_RST_CLK_CPU_C1_HSI) || ((SOURCE) == MDR_RST_CLK_CPU_C1_HSI_DIV_2) || ((SOURCE) == MDR_RST_CLK_CPU_C1_HSE) || ((SOURCE) == MDR_RST_CLK_CPU_C1_HSE_DIV_2))
+#define IS_MDR_RST_CLK_CPU_C2(SOURCE)    (((SOURCE) == MDR_RST_CLK_CPU_C2_CPU_C1) || ((SOURCE) == MDR_RST_CLK_CPU_C2_PLL_CPU))
+#define IS_MDR_RST_CLK_CPU_C3(DIV)       (((DIV) == MDR_RST_CLK_CPU_C3_DIV_1) || (((DIV) >= MDR_RST_CLK_CPU_C3_DIV_2) && ((DIV) <= MDR_RST_CLK_CPU_C3_DIV_256)))
+#define IS_MDR_RST_CLK_HCLK(SOURCE)      (((SOURCE) == MDR_RST_CLK_HCLK_HSI) || ((SOURCE) == MDR_RST_CLK_HCLK_CPU_C3) || ((SOURCE) == MDR_RST_CLK_HCLK_LSE) || ((SOURCE) == MDR_RST_CLK_HCLK_LSI))
 /** @} */
 
-/** @defgroup MDR_RST_CLK_PLL_USB_Mul_Values USB PLL multiplier values
+/** @defgroup MDR_RST_CLK_USB_Clock_Bits USB clock fields
  * @{
  */
-#define MDR_RST_CLK_PLL_USB_MUL_4                     (0x03UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_5                     (0x04UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_6                     (0x05UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_7                     (0x06UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_8                     (0x07UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_9                     (0x08UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_10                    (0x09UL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_11                    (0x0AUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_12                    (0x0BUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_13                    (0x0CUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_14                    (0x0DUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_15                    (0x0EUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define MDR_RST_CLK_PLL_USB_MUL_16                    (0x0FUL << MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos)
-#define IS_MDR_RST_CLK_PLL_USB_MUL(MUL)               ((((MUL) & ~MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Msk) == 0UL) && \
-                                                        (((MUL) >> MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos) >= 3UL) && \
-                                                        (((MUL) >> MDR_RST_CLK_PLL_CONTROL_PLL_USB_MUL_Pos) <= 15UL))
+#define MDR_RST_CLK_USB_C1_Pos        0U
+#define MDR_RST_CLK_USB_C2_Pos        2U
+#define MDR_RST_CLK_USB_C3_Pos        4U
+#define MDR_RST_CLK_USB_CLK_EN_Pos    8U
+
+#define MDR_RST_CLK_USB_C1_Msk        ( 0x03UL << MDR_RST_CLK_USB_C1_Pos     )
+#define MDR_RST_CLK_USB_C2_Msk        ( 0x01UL << MDR_RST_CLK_USB_C2_Pos     )
+#define MDR_RST_CLK_USB_C3_Msk        ( 0x01UL << MDR_RST_CLK_USB_C3_Pos     )
+#define MDR_RST_CLK_USB_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_USB_CLK_EN_Pos )
+
+#define MDR_RST_CLK_USB_C1_HSI          ( 0x00UL << MDR_RST_CLK_USB_C1_Pos )
+#define MDR_RST_CLK_USB_C1_HSI_DIV_2    ( 0x01UL << MDR_RST_CLK_USB_C1_Pos )
+#define MDR_RST_CLK_USB_C1_HSE          ( 0x02UL << MDR_RST_CLK_USB_C1_Pos )
+#define MDR_RST_CLK_USB_C1_HSE_DIV_2    ( 0x03UL << MDR_RST_CLK_USB_C1_Pos )
+#define MDR_RST_CLK_USB_C2_USB_C1       ( 0x00UL << MDR_RST_CLK_USB_C2_Pos )
+#define MDR_RST_CLK_USB_C2_PLL_USB      ( 0x01UL << MDR_RST_CLK_USB_C2_Pos )
+#define MDR_RST_CLK_USB_C3_DIV_1        ( 0x00UL << MDR_RST_CLK_USB_C3_Pos )
+#define MDR_RST_CLK_USB_C3_DIV_2        ( 0x01UL << MDR_RST_CLK_USB_C3_Pos )
+#define MDR_RST_CLK_USB_CLK_DISABLE     ( 0UL    << MDR_RST_CLK_USB_CLK_EN_Pos )
+#define MDR_RST_CLK_USB_CLK_ENABLE      ( 1UL    << MDR_RST_CLK_USB_CLK_EN_Pos )
+
+#define IS_MDR_RST_CLK_USB_C1(SOURCE)    (((SOURCE) == MDR_RST_CLK_USB_C1_HSI) || ((SOURCE) == MDR_RST_CLK_USB_C1_HSI_DIV_2) || ((SOURCE) == MDR_RST_CLK_USB_C1_HSE) || ((SOURCE) == MDR_RST_CLK_USB_C1_HSE_DIV_2))
+#define IS_MDR_RST_CLK_USB_C2(SOURCE)    (((SOURCE) == MDR_RST_CLK_USB_C2_USB_C1) || ((SOURCE) == MDR_RST_CLK_USB_C2_PLL_USB))
+#define IS_MDR_RST_CLK_USB_C3(DIV)       (((DIV) == MDR_RST_CLK_USB_C3_DIV_1) || ((DIV) == MDR_RST_CLK_USB_C3_DIV_2))
 /** @} */
 
-/** @defgroup MDR_RST_CLK_CPU_C1_Values CPU_C1 source values
+/** @defgroup MDR_RST_CLK_ADC_Clock_Bits ADC clock fields
  * @{
  */
-#define MDR_RST_CLK_CPU_C1_HSI                        (0x00UL << 0U)
-#define MDR_RST_CLK_CPU_C1_HSI_DIV_2                  (0x01UL << 0U)
-#define MDR_RST_CLK_CPU_C1_HSE                        (0x02UL << 0U)
-#define MDR_RST_CLK_CPU_C1_HSE_DIV_2                  (0x03UL << 0U)
-#define MDR_RST_CLK_CPU_C1_Msk                        (0x03UL << 0U)
-#define IS_MDR_RST_CLK_CPU_C1(SOURCE)                 (((SOURCE) & ~MDR_RST_CLK_CPU_C1_Msk) == 0UL)
+#define MDR_RST_CLK_ADC_C1_Pos        0U
+#define MDR_RST_CLK_ADC_C2_Pos        4U
+#define MDR_RST_CLK_ADC_C3_Pos        8U
+#define MDR_RST_CLK_ADC_CLK_EN_Pos    13U
+
+#define MDR_RST_CLK_ADC_C1_Msk        ( 0x03UL << MDR_RST_CLK_ADC_C1_Pos     )
+#define MDR_RST_CLK_ADC_C2_Msk        ( 0x03UL << MDR_RST_CLK_ADC_C2_Pos     )
+#define MDR_RST_CLK_ADC_C3_Msk        ( 0x0FUL << MDR_RST_CLK_ADC_C3_Pos     )
+#define MDR_RST_CLK_ADC_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_ADC_CLK_EN_Pos )
+
+#define MDR_RST_CLK_ADC_C1_CPU_C1    ( 0x00UL << MDR_RST_CLK_ADC_C1_Pos )
+#define MDR_RST_CLK_ADC_C1_USB_C1    ( 0x01UL << MDR_RST_CLK_ADC_C1_Pos )
+#define MDR_RST_CLK_ADC_C1_CPU_C2    ( 0x02UL << MDR_RST_CLK_ADC_C1_Pos )
+#define MDR_RST_CLK_ADC_C1_USB_C2    ( 0x03UL << MDR_RST_CLK_ADC_C1_Pos )
+#define MDR_RST_CLK_ADC_C2_LSE       ( 0x00UL << MDR_RST_CLK_ADC_C2_Pos )
+#define MDR_RST_CLK_ADC_C2_LSI       ( 0x01UL << MDR_RST_CLK_ADC_C2_Pos )
+#define MDR_RST_CLK_ADC_C2_ADC_C1    ( 0x02UL << MDR_RST_CLK_ADC_C2_Pos )
+#define MDR_RST_CLK_ADC_C2_HSI_C1    ( 0x03UL << MDR_RST_CLK_ADC_C2_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_1              ( 0x00UL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_2              ( 0x08UL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_4              ( 0x09UL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_8              ( 0x0AUL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_16             ( 0x0BUL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_32             ( 0x0CUL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_64             ( 0x0DUL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_128            ( 0x0EUL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_C3_DIV_256            ( 0x0FUL << MDR_RST_CLK_ADC_C3_Pos )
+#define MDR_RST_CLK_ADC_CLK_DISABLE    ( 0UL << MDR_RST_CLK_ADC_CLK_EN_Pos )
+#define MDR_RST_CLK_ADC_CLK_ENABLE     ( 1UL << MDR_RST_CLK_ADC_CLK_EN_Pos )
+
+#define IS_MDR_RST_CLK_ADC_C1(SOURCE)    (((SOURCE) == MDR_RST_CLK_ADC_C1_CPU_C1) || ((SOURCE) == MDR_RST_CLK_ADC_C1_USB_C1) || ((SOURCE) == MDR_RST_CLK_ADC_C1_CPU_C2) || ((SOURCE) == MDR_RST_CLK_ADC_C1_USB_C2))
+#define IS_MDR_RST_CLK_ADC_C2(SOURCE)    (((SOURCE) == MDR_RST_CLK_ADC_C2_LSE) || ((SOURCE) == MDR_RST_CLK_ADC_C2_LSI) || ((SOURCE) == MDR_RST_CLK_ADC_C2_ADC_C1) || ((SOURCE) == MDR_RST_CLK_ADC_C2_HSI_C1))
+#define IS_MDR_RST_CLK_ADC_C3(DIV)       (((DIV) == MDR_RST_CLK_ADC_C3_DIV_1) || (((DIV) >= MDR_RST_CLK_ADC_C3_DIV_2) && ((DIV) <= MDR_RST_CLK_ADC_C3_DIV_256)))
 /** @} */
 
-/** @defgroup MDR_RST_CLK_CPU_C2_Values CPU_C2 source values
+/** @defgroup MDR_RST_CLK_RTC_Clock_Bits RTC clock fields
  * @{
  */
-#define MDR_RST_CLK_CPU_C2_CPU_C1                     (0x00UL << 2U)
-#define MDR_RST_CLK_CPU_C2_PLL_CPU                    (0x01UL << 2U)
-#define MDR_RST_CLK_CPU_C2_Msk                        (0x01UL << 2U)
-#define IS_MDR_RST_CLK_CPU_C2(SOURCE)                 (((SOURCE) == MDR_RST_CLK_CPU_C2_CPU_C1) || \
-                                                        ((SOURCE) == MDR_RST_CLK_CPU_C2_PLL_CPU))
-/** @} */
+#define MDR_RST_CLK_RTC_HSE_Pos       0U
+#define MDR_RST_CLK_RTC_HSI_Pos       4U
+#define MDR_RST_CLK_RTC_HSE_EN_Pos    8U
+#define MDR_RST_CLK_RTC_HSI_EN_Pos    9U
 
-/** @defgroup MDR_RST_CLK_CPU_C3_Div_Values CPU_C3 divider values
- * @{
- */
-#define MDR_RST_CLK_CPU_C3_DIV_1                      (0x00UL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_2                      (0x08UL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_4                      (0x09UL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_8                      (0x0AUL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_16                     (0x0BUL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_32                     (0x0CUL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_64                     (0x0DUL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_128                    (0x0EUL << 4U)
-#define MDR_RST_CLK_CPU_C3_DIV_256                    (0x0FUL << 4U)
-#define MDR_RST_CLK_CPU_C3_Msk                        (0x0FUL << 4U)
-#define IS_MDR_RST_CLK_CPU_C3(DIV)                    ((((DIV) == MDR_RST_CLK_CPU_C3_DIV_1)) || \
-                                                        (((DIV) >= MDR_RST_CLK_CPU_C3_DIV_2) && \
-                                                         ((DIV) <= MDR_RST_CLK_CPU_C3_DIV_256)))
-/** @} */
+#define MDR_RST_CLK_RTC_HSE_Msk       ( 0x0FUL << MDR_RST_CLK_RTC_HSE_Pos    )
+#define MDR_RST_CLK_RTC_HSI_Msk       ( 0x0FUL << MDR_RST_CLK_RTC_HSI_Pos    )
+#define MDR_RST_CLK_RTC_HSE_EN_Msk    ( 1UL    << MDR_RST_CLK_RTC_HSE_EN_Pos )
+#define MDR_RST_CLK_RTC_HSI_EN_Msk    ( 1UL    << MDR_RST_CLK_RTC_HSI_EN_Pos )
 
-/** @defgroup MDR_RST_CLK_HCLK_Values HCLK source values
- * @{
- */
-#define MDR_RST_CLK_HCLK_HSI                          (0x00UL << 8U)
-#define MDR_RST_CLK_HCLK_CPU_C3                       (0x01UL << 8U)
-#define MDR_RST_CLK_HCLK_LSE                          (0x02UL << 8U)
-#define MDR_RST_CLK_HCLK_LSI                          (0x03UL << 8U)
-#define MDR_RST_CLK_HCLK_Msk                          (0x03UL << 8U)
-#define IS_MDR_RST_CLK_HCLK(SOURCE)                   ((((SOURCE) & ~MDR_RST_CLK_HCLK_Msk) == 0UL) && \
-                                                        (((SOURCE) >> 8U) <= 3UL))
-/** @} */
-
-/** @defgroup MDR_RST_CLK_USB_C1_Values USB_C1 source values
- * @{
- */
-#define MDR_RST_CLK_USB_C1_HSI                        (0x00UL << 0U)
-#define MDR_RST_CLK_USB_C1_HSI_DIV_2                  (0x01UL << 0U)
-#define MDR_RST_CLK_USB_C1_HSE                        (0x02UL << 0U)
-#define MDR_RST_CLK_USB_C1_HSE_DIV_2                  (0x03UL << 0U)
-#define MDR_RST_CLK_USB_C1_Msk                        (0x03UL << 0U)
-#define IS_MDR_RST_CLK_USB_C1(SOURCE)                 (((SOURCE) & ~MDR_RST_CLK_USB_C1_Msk) == 0UL)
-/** @} */
-
-/** @defgroup MDR_RST_CLK_USB_C2_Values USB_C2 source values
- * @{
- */
-#define MDR_RST_CLK_USB_C2_USB_C1                     (0x00UL << 2U)
-#define MDR_RST_CLK_USB_C2_PLL_USB                    (0x01UL << 2U)
-#define MDR_RST_CLK_USB_C2_Msk                        (0x01UL << 2U)
-#define IS_MDR_RST_CLK_USB_C2(SOURCE)                 (((SOURCE) == MDR_RST_CLK_USB_C2_USB_C1) || \
-                                                        ((SOURCE) == MDR_RST_CLK_USB_C2_PLL_USB))
-/** @} */
-
-/** @defgroup MDR_RST_CLK_USB_C3_Div_Values USB_C3 divider values
- * @{
- */
-#define MDR_RST_CLK_USB_C3_DIV_1                      (0x00UL << 4U)
-#define MDR_RST_CLK_USB_C3_DIV_2                      (0x01UL << 4U)
-#define MDR_RST_CLK_USB_C3_Msk                        (0x01UL << 4U)
-#define IS_MDR_RST_CLK_USB_C3(DIV)                    (((DIV) == MDR_RST_CLK_USB_C3_DIV_1) || \
-                                                        ((DIV) == MDR_RST_CLK_USB_C3_DIV_2))
-/** @} */
-
-#define MDR_RST_CLK_USB_CLK_EN_Msk                    (1UL << 8U)
-
-/** @defgroup MDR_RST_CLK_ADC_C1_Values ADC_C1 source values
- * @{
- */
-#define MDR_RST_CLK_ADC_C1_CPU_C1                     (0x00UL << 0U)
-#define MDR_RST_CLK_ADC_C1_USB_C1                     (0x01UL << 0U)
-#define MDR_RST_CLK_ADC_C1_CPU_C2                     (0x02UL << 0U)
-#define MDR_RST_CLK_ADC_C1_USB_C2                     (0x03UL << 0U)
-#define MDR_RST_CLK_ADC_C1_Msk                        (0x03UL << 0U)
-#define IS_MDR_RST_CLK_ADC_C1(SOURCE)                 (((SOURCE) & ~MDR_RST_CLK_ADC_C1_Msk) == 0UL)
-/** @} */
-
-/** @defgroup MDR_RST_CLK_ADC_C2_Values ADC_C2 source values
- * @{
- */
-#define MDR_RST_CLK_ADC_C2_LSE                        (0x00UL << 4U)
-#define MDR_RST_CLK_ADC_C2_LSI                        (0x01UL << 4U)
-#define MDR_RST_CLK_ADC_C2_ADC_C1                     (0x02UL << 4U)
-#define MDR_RST_CLK_ADC_C2_HSI_C1                     (0x03UL << 4U)
-#define MDR_RST_CLK_ADC_C2_Msk                        (0x03UL << 4U)
-#define IS_MDR_RST_CLK_ADC_C2(SOURCE)                 ((((SOURCE) & ~MDR_RST_CLK_ADC_C2_Msk) == 0UL) && \
-                                                        (((SOURCE) >> 4U) <= 3UL))
-/** @} */
-
-/** @defgroup MDR_RST_CLK_ADC_C3_Div_Values ADC_C3 divider values
- * @{
- */
-#define MDR_RST_CLK_ADC_C3_DIV_1                      (0x00UL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_2                      (0x08UL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_4                      (0x09UL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_8                      (0x0AUL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_16                     (0x0BUL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_32                     (0x0CUL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_64                     (0x0DUL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_128                    (0x0EUL << 8U)
-#define MDR_RST_CLK_ADC_C3_DIV_256                    (0x0FUL << 8U)
-#define MDR_RST_CLK_ADC_C3_Msk                        (0x0FUL << 8U)
-#define IS_MDR_RST_CLK_ADC_C3(DIV)                    (((DIV) == MDR_RST_CLK_ADC_C3_DIV_1) || \
-                                                        (((DIV) >= MDR_RST_CLK_ADC_C3_DIV_2) && \
-                                                         ((DIV) <= MDR_RST_CLK_ADC_C3_DIV_256)))
-/** @} */
-
-#define MDR_RST_CLK_ADC_CLK_EN_Msk                    (1UL << 13U)
-
-/** @defgroup MDR_RST_CLK_RTC_Clock_Values RTC clock output values
- * @{
- */
-#define MDR_RST_CLK_RTC_HSE_DIV_1                     (0x00UL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_2                     (0x08UL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_4                     (0x09UL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_8                     (0x0AUL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_16                    (0x0BUL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_32                    (0x0CUL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_64                    (0x0DUL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_128                   (0x0EUL << 0U)
-#define MDR_RST_CLK_RTC_HSE_DIV_256                   (0x0FUL << 0U)
-#define MDR_RST_CLK_RTC_HSE_Msk                       (0x0FUL << 0U)
-
-#define MDR_RST_CLK_RTC_HSI_DIV_1                     (0x00UL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_2                     (0x08UL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_4                     (0x09UL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_8                     (0x0AUL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_16                    (0x0BUL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_32                    (0x0CUL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_64                    (0x0DUL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_128                   (0x0EUL << 4U)
-#define MDR_RST_CLK_RTC_HSI_DIV_256                   (0x0FUL << 4U)
-#define MDR_RST_CLK_RTC_HSI_Msk                       (0x0FUL << 4U)
-
-#define MDR_RST_CLK_RTC_HSE_EN_Msk                    (1UL << 8U)
-#define MDR_RST_CLK_RTC_HSI_EN_Msk                    (1UL << 9U)
+#define MDR_RST_CLK_RTC_HSE_DIV_1              ( 0x00UL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_2              ( 0x08UL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_4              ( 0x09UL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_8              ( 0x0AUL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_16             ( 0x0BUL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_32             ( 0x0CUL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_64             ( 0x0DUL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_128            ( 0x0EUL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSE_DIV_256            ( 0x0FUL << MDR_RST_CLK_RTC_HSE_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_1              ( 0x00UL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_2              ( 0x08UL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_4              ( 0x09UL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_8              ( 0x0AUL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_16             ( 0x0BUL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_32             ( 0x0CUL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_64             ( 0x0DUL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_128            ( 0x0EUL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSI_DIV_256            ( 0x0FUL << MDR_RST_CLK_RTC_HSI_Pos )
+#define MDR_RST_CLK_RTC_HSE_DISABLE    ( 0UL << MDR_RST_CLK_RTC_HSE_EN_Pos )
+#define MDR_RST_CLK_RTC_HSE_ENABLE     ( 1UL << MDR_RST_CLK_RTC_HSE_EN_Pos )
+#define MDR_RST_CLK_RTC_HSI_DISABLE    ( 0UL << MDR_RST_CLK_RTC_HSI_EN_Pos )
+#define MDR_RST_CLK_RTC_HSI_ENABLE     ( 1UL << MDR_RST_CLK_RTC_HSI_EN_Pos )
 /** @} */
 
 /** @defgroup MDR_RST_CLK_Peripheral_Clock_Values Peripheral PCLK masks
  * @{
  */
-#define MDR_RST_CLK_PER_CLOCK_CAN1                    (1UL << 0U)
-#define MDR_RST_CLK_PER_CLOCK_CAN2                    (1UL << 1U)
-#define MDR_RST_CLK_PER_CLOCK_USB                     (1UL << 2U)
-#define MDR_RST_CLK_PER_CLOCK_EEPROM                  (1UL << 3U)
-#define MDR_RST_CLK_PER_CLOCK_RST_CLK                 (1UL << 4U)
-#define MDR_RST_CLK_PER_CLOCK_DMA                     (1UL << 5U)
-#define MDR_RST_CLK_PER_CLOCK_UART1                   (1UL << 6U)
-#define MDR_RST_CLK_PER_CLOCK_UART2                   (1UL << 7U)
-#define MDR_RST_CLK_PER_CLOCK_SSP1                    (1UL << 8U)
-#define MDR_RST_CLK_PER_CLOCK_I2C                     (1UL << 10U)
-#define MDR_RST_CLK_PER_CLOCK_POWER                   (1UL << 11U)
-#define MDR_RST_CLK_PER_CLOCK_WWDG                    (1UL << 12U)
-#define MDR_RST_CLK_PER_CLOCK_IWDG                    (1UL << 13U)
-#define MDR_RST_CLK_PER_CLOCK_TIMER1                  (1UL << 14U)
-#define MDR_RST_CLK_PER_CLOCK_TIMER2                  (1UL << 15U)
-#define MDR_RST_CLK_PER_CLOCK_TIMER3                  (1UL << 16U)
-#define MDR_RST_CLK_PER_CLOCK_ADC                     (1UL << 17U)
-#define MDR_RST_CLK_PER_CLOCK_DAC                     (1UL << 18U)
-#define MDR_RST_CLK_PER_CLOCK_COMP                    (1UL << 19U)
-#define MDR_RST_CLK_PER_CLOCK_SSP2                    (1UL << 20U)
-#define MDR_RST_CLK_PER_CLOCK_PORTA                   (1UL << 21U)
-#define MDR_RST_CLK_PER_CLOCK_PORTB                   (1UL << 22U)
-#define MDR_RST_CLK_PER_CLOCK_PORTC                   (1UL << 23U)
-#define MDR_RST_CLK_PER_CLOCK_PORTD                   (1UL << 24U)
-#define MDR_RST_CLK_PER_CLOCK_PORTE                   (1UL << 25U)
-#define MDR_RST_CLK_PER_CLOCK_BKP                     (1UL << 27U)
-#define MDR_RST_CLK_PER_CLOCK_PORTF                   (1UL << 29U)
-#define MDR_RST_CLK_PER_CLOCK_EXT_BUS                 (1UL << 30U)
+#define MDR_RST_CLK_PER_CLOCK_CAN1_Pos       0U
+#define MDR_RST_CLK_PER_CLOCK_CAN2_Pos       1U
+#define MDR_RST_CLK_PER_CLOCK_USB_Pos        2U
+#define MDR_RST_CLK_PER_CLOCK_EEPROM_Pos     3U
+#define MDR_RST_CLK_PER_CLOCK_RST_CLK_Pos    4U
+#define MDR_RST_CLK_PER_CLOCK_DMA_Pos        5U
+#define MDR_RST_CLK_PER_CLOCK_UART1_Pos      6U
+#define MDR_RST_CLK_PER_CLOCK_UART2_Pos      7U
+#define MDR_RST_CLK_PER_CLOCK_SSP1_Pos       8U
+#define MDR_RST_CLK_PER_CLOCK_I2C_Pos        10U
+#define MDR_RST_CLK_PER_CLOCK_POWER_Pos      11U
+#define MDR_RST_CLK_PER_CLOCK_WWDG_Pos       12U
+#define MDR_RST_CLK_PER_CLOCK_IWDG_Pos       13U
+#define MDR_RST_CLK_PER_CLOCK_TIMER1_Pos     14U
+#define MDR_RST_CLK_PER_CLOCK_TIMER2_Pos     15U
+#define MDR_RST_CLK_PER_CLOCK_TIMER3_Pos     16U
+#define MDR_RST_CLK_PER_CLOCK_ADC_Pos        17U
+#define MDR_RST_CLK_PER_CLOCK_DAC_Pos        18U
+#define MDR_RST_CLK_PER_CLOCK_COMP_Pos       19U
+#define MDR_RST_CLK_PER_CLOCK_SSP2_Pos       20U
+#define MDR_RST_CLK_PER_CLOCK_PORTA_Pos      21U
+#define MDR_RST_CLK_PER_CLOCK_PORTB_Pos      22U
+#define MDR_RST_CLK_PER_CLOCK_PORTC_Pos      23U
+#define MDR_RST_CLK_PER_CLOCK_PORTD_Pos      24U
+#define MDR_RST_CLK_PER_CLOCK_PORTE_Pos      25U
+#define MDR_RST_CLK_PER_CLOCK_BKP_Pos        27U
+#define MDR_RST_CLK_PER_CLOCK_PORTF_Pos      29U
+#define MDR_RST_CLK_PER_CLOCK_EXT_BUS_Pos    30U
+
+#define MDR_RST_CLK_PER_CLOCK_CAN1_Msk       ( 1UL << MDR_RST_CLK_PER_CLOCK_CAN1_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_CAN2_Msk       ( 1UL << MDR_RST_CLK_PER_CLOCK_CAN2_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_USB_Msk        ( 1UL << MDR_RST_CLK_PER_CLOCK_USB_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_EEPROM_Msk     ( 1UL << MDR_RST_CLK_PER_CLOCK_EEPROM_Pos  )
+#define MDR_RST_CLK_PER_CLOCK_RST_CLK_Msk    ( 1UL << MDR_RST_CLK_PER_CLOCK_RST_CLK_Pos )
+#define MDR_RST_CLK_PER_CLOCK_DMA_Msk        ( 1UL << MDR_RST_CLK_PER_CLOCK_DMA_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_UART1_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_UART1_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_UART2_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_UART2_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_SSP1_Msk       ( 1UL << MDR_RST_CLK_PER_CLOCK_SSP1_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_I2C_Msk        ( 1UL << MDR_RST_CLK_PER_CLOCK_I2C_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_POWER_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_POWER_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_WWDG_Msk       ( 1UL << MDR_RST_CLK_PER_CLOCK_WWDG_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_IWDG_Msk       ( 1UL << MDR_RST_CLK_PER_CLOCK_IWDG_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_TIMER1_Msk     ( 1UL << MDR_RST_CLK_PER_CLOCK_TIMER1_Pos  )
+#define MDR_RST_CLK_PER_CLOCK_TIMER2_Msk     ( 1UL << MDR_RST_CLK_PER_CLOCK_TIMER2_Pos  )
+#define MDR_RST_CLK_PER_CLOCK_TIMER3_Msk     ( 1UL << MDR_RST_CLK_PER_CLOCK_TIMER3_Pos  )
+#define MDR_RST_CLK_PER_CLOCK_ADC_Msk        ( 1UL << MDR_RST_CLK_PER_CLOCK_ADC_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_DAC_Msk        ( 1UL << MDR_RST_CLK_PER_CLOCK_DAC_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_COMP_Msk       ( 1UL << MDR_RST_CLK_PER_CLOCK_COMP_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_SSP2_Msk       ( 1UL << MDR_RST_CLK_PER_CLOCK_SSP2_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTA_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_PORTA_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_PORTB_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_PORTB_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_PORTC_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_PORTC_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_PORTD_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_PORTD_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_PORTE_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_PORTE_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_BKP_Msk        ( 1UL << MDR_RST_CLK_PER_CLOCK_BKP_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_PORTF_Msk      ( 1UL << MDR_RST_CLK_PER_CLOCK_PORTF_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_EXT_BUS_Msk    ( 1UL << MDR_RST_CLK_PER_CLOCK_EXT_BUS_Pos )
+
+#define MDR_RST_CLK_PER_CLOCK_CAN1_ENABLE             ( 0x01UL << MDR_RST_CLK_PER_CLOCK_CAN1_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_CAN2_ENABLE             ( 0x01UL << MDR_RST_CLK_PER_CLOCK_CAN2_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_USB_ENABLE              ( 0x01UL << MDR_RST_CLK_PER_CLOCK_USB_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_EEPROM_ENABLE           ( 0x01UL << MDR_RST_CLK_PER_CLOCK_EEPROM_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_RST_CLK_ENABLE          ( 0x01UL << MDR_RST_CLK_PER_CLOCK_RST_CLK_Pos  )
+#define MDR_RST_CLK_PER_CLOCK_DMA_ENABLE              ( 0x01UL << MDR_RST_CLK_PER_CLOCK_DMA_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_UART1_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_UART1_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_UART2_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_UART2_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_SSP1_ENABLE             ( 0x01UL << MDR_RST_CLK_PER_CLOCK_SSP1_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_I2C_ENABLE              ( 0x01UL << MDR_RST_CLK_PER_CLOCK_I2C_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_POWER_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_POWER_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_WWDG_ENABLE             ( 0x01UL << MDR_RST_CLK_PER_CLOCK_WWDG_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_IWDG_ENABLE             ( 0x01UL << MDR_RST_CLK_PER_CLOCK_IWDG_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_TIMER1_ENABLE           ( 0x01UL << MDR_RST_CLK_PER_CLOCK_TIMER1_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_TIMER2_ENABLE           ( 0x01UL << MDR_RST_CLK_PER_CLOCK_TIMER2_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_TIMER3_ENABLE           ( 0x01UL << MDR_RST_CLK_PER_CLOCK_TIMER3_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_ADC_ENABLE              ( 0x01UL << MDR_RST_CLK_PER_CLOCK_ADC_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_DAC_ENABLE              ( 0x01UL << MDR_RST_CLK_PER_CLOCK_DAC_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_COMP_ENABLE             ( 0x01UL << MDR_RST_CLK_PER_CLOCK_COMP_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_SSP2_ENABLE             ( 0x01UL << MDR_RST_CLK_PER_CLOCK_SSP2_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_PORTA_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_PORTA_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTB_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_PORTB_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTC_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_PORTC_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTD_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_PORTD_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTE_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_PORTE_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_BKP_ENABLE              ( 0x01UL << MDR_RST_CLK_PER_CLOCK_BKP_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_PORTF_ENABLE            ( 0x01UL << MDR_RST_CLK_PER_CLOCK_PORTF_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_EXT_BUS_ENABLE          ( 0x01UL << MDR_RST_CLK_PER_CLOCK_EXT_BUS_Pos  )
+
+#define MDR_RST_CLK_PER_CLOCK_CAN1_DISABLE            ( 0x00UL << MDR_RST_CLK_PER_CLOCK_CAN1_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_CAN2_DISABLE            ( 0x00UL << MDR_RST_CLK_PER_CLOCK_CAN2_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_USB_DISABLE             ( 0x00UL << MDR_RST_CLK_PER_CLOCK_USB_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_EEPROM_DISABLE          ( 0x00UL << MDR_RST_CLK_PER_CLOCK_EEPROM_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_RST_CLK_DISABLE         ( 0x00UL << MDR_RST_CLK_PER_CLOCK_RST_CLK_Pos  )
+#define MDR_RST_CLK_PER_CLOCK_DMA_DISABLE             ( 0x00UL << MDR_RST_CLK_PER_CLOCK_DMA_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_UART1_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_UART1_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_UART2_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_UART2_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_SSP1_DISABLE            ( 0x00UL << MDR_RST_CLK_PER_CLOCK_SSP1_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_I2C_DISABLE             ( 0x00UL << MDR_RST_CLK_PER_CLOCK_I2C_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_POWER_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_POWER_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_WWDG_DISABLE            ( 0x00UL << MDR_RST_CLK_PER_CLOCK_WWDG_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_IWDG_DISABLE            ( 0x00UL << MDR_RST_CLK_PER_CLOCK_IWDG_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_TIMER1_DISABLE          ( 0x00UL << MDR_RST_CLK_PER_CLOCK_TIMER1_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_TIMER2_DISABLE          ( 0x00UL << MDR_RST_CLK_PER_CLOCK_TIMER2_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_TIMER3_DISABLE          ( 0x00UL << MDR_RST_CLK_PER_CLOCK_TIMER3_Pos   )
+#define MDR_RST_CLK_PER_CLOCK_ADC_DISABLE             ( 0x00UL << MDR_RST_CLK_PER_CLOCK_ADC_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_DAC_DISABLE             ( 0x00UL << MDR_RST_CLK_PER_CLOCK_DAC_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_COMP_DISABLE            ( 0x00UL << MDR_RST_CLK_PER_CLOCK_COMP_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_SSP2_DISABLE            ( 0x00UL << MDR_RST_CLK_PER_CLOCK_SSP2_Pos     )
+#define MDR_RST_CLK_PER_CLOCK_PORTA_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_PORTA_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTB_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_PORTB_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTC_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_PORTC_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTD_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_PORTD_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_PORTE_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_PORTE_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_BKP_DISABLE             ( 0x00UL << MDR_RST_CLK_PER_CLOCK_BKP_Pos      )
+#define MDR_RST_CLK_PER_CLOCK_PORTF_DISABLE           ( 0x00UL << MDR_RST_CLK_PER_CLOCK_PORTF_Pos    )
+#define MDR_RST_CLK_PER_CLOCK_EXT_BUS_DISABLE         ( 0x00UL << MDR_RST_CLK_PER_CLOCK_EXT_BUS_Pos  )
 /** @} */
 
-/** @defgroup MDR_RST_CLK_Peripheral_Divider_Values UART/TIMER/CAN/SSP divider codes
+/** @defgroup MDR_RST_CLK_Peripheral_Clock_Fields UART/TIMER/CAN/SSP clock fields
  * @{
  */
-#define MDR_RST_CLK_DIV_1                             0x00U
-#define MDR_RST_CLK_DIV_2                             0x01U
-#define MDR_RST_CLK_DIV_4                             0x02U
-#define MDR_RST_CLK_DIV_8                             0x03U
-#define MDR_RST_CLK_DIV_16                            0x04U
-#define MDR_RST_CLK_DIV_32                            0x05U
-#define MDR_RST_CLK_DIV_64                            0x06U
-#define MDR_RST_CLK_DIV_128                           0x07U
-#define IS_MDR_RST_CLK_PERIPHERAL_DIV(DIV)            ((DIV) <= MDR_RST_CLK_DIV_128)
+#define MDR_RST_CLK_UART1_BRG_Pos       0U
+#define MDR_RST_CLK_UART2_BRG_Pos       8U
+#define MDR_RST_CLK_UART1_CLK_EN_Pos    24U
+#define MDR_RST_CLK_UART2_CLK_EN_Pos    25U
+
+#define MDR_RST_CLK_TIMER1_BRG_Pos       0U
+#define MDR_RST_CLK_TIMER2_BRG_Pos       8U
+#define MDR_RST_CLK_TIMER3_BRG_Pos       16U
+#define MDR_RST_CLK_TIMER1_CLK_EN_Pos    24U
+#define MDR_RST_CLK_TIMER2_CLK_EN_Pos    25U
+#define MDR_RST_CLK_TIMER3_CLK_EN_Pos    26U
+
+#define MDR_RST_CLK_CAN1_BRG_Pos       0U
+#define MDR_RST_CLK_CAN2_BRG_Pos       8U
+#define MDR_RST_CLK_CAN1_CLK_EN_Pos    24U
+#define MDR_RST_CLK_CAN2_CLK_EN_Pos    25U
+
+#define MDR_RST_CLK_SSP1_BRG_Pos       0U
+#define MDR_RST_CLK_SSP2_BRG_Pos       8U
+#define MDR_RST_CLK_SSP1_CLK_EN_Pos    24U
+#define MDR_RST_CLK_SSP2_CLK_EN_Pos    25U
+
+#define MDR_RST_CLK_UART1_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_UART1_BRG_Pos    )
+#define MDR_RST_CLK_UART2_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_UART2_BRG_Pos    )
+#define MDR_RST_CLK_UART1_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_UART1_CLK_EN_Pos )
+#define MDR_RST_CLK_UART2_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_UART2_CLK_EN_Pos )
+
+#define MDR_RST_CLK_TIMER1_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_TIMER1_BRG_Pos    )
+#define MDR_RST_CLK_TIMER2_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_TIMER2_BRG_Pos    )
+#define MDR_RST_CLK_TIMER3_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_TIMER3_BRG_Pos    )
+#define MDR_RST_CLK_TIMER1_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_TIMER1_CLK_EN_Pos )
+#define MDR_RST_CLK_TIMER2_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_TIMER2_CLK_EN_Pos )
+#define MDR_RST_CLK_TIMER3_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_TIMER3_CLK_EN_Pos )
+
+#define MDR_RST_CLK_CAN1_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_CAN1_BRG_Pos    )
+#define MDR_RST_CLK_CAN2_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_CAN2_BRG_Pos    )
+#define MDR_RST_CLK_CAN1_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_CAN1_CLK_EN_Pos )
+#define MDR_RST_CLK_CAN2_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_CAN2_CLK_EN_Pos )
+
+#define MDR_RST_CLK_SSP1_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_SSP1_BRG_Pos    )
+#define MDR_RST_CLK_SSP2_BRG_Msk       ( 0xFFUL << MDR_RST_CLK_SSP2_BRG_Pos    )
+#define MDR_RST_CLK_SSP1_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_SSP1_CLK_EN_Pos )
+#define MDR_RST_CLK_SSP2_CLK_EN_Msk    ( 1UL    << MDR_RST_CLK_SSP2_CLK_EN_Pos )
+
+#define MDR_RST_CLK_UART1_DIV_1              ( 0x00UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART1_DIV_2              ( 0x01UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART1_DIV_4              ( 0x02UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART1_DIV_8              ( 0x03UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART1_DIV_16             ( 0x04UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART1_DIV_32             ( 0x05UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART1_DIV_64             ( 0x06UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART1_DIV_128            ( 0x07UL << MDR_RST_CLK_UART1_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_1              ( 0x00UL << MDR_RST_CLK_UART2_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_2              ( 0x01UL << MDR_RST_CLK_UART2_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_4              ( 0x02UL << MDR_RST_CLK_UART2_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_8              ( 0x03UL << MDR_RST_CLK_UART2_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_16             ( 0x04UL << MDR_RST_CLK_UART2_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_32             ( 0x05UL << MDR_RST_CLK_UART2_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_64             ( 0x06UL << MDR_RST_CLK_UART2_BRG_Pos )
+#define MDR_RST_CLK_UART2_DIV_128            ( 0x07UL << MDR_RST_CLK_UART2_BRG_Pos )
+
+#define MDR_RST_CLK_TIMER1_DIV_1              ( 0x00UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER1_DIV_2              ( 0x01UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER1_DIV_4              ( 0x02UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER1_DIV_8              ( 0x03UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER1_DIV_16             ( 0x04UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER1_DIV_32             ( 0x05UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER1_DIV_64             ( 0x06UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER1_DIV_128            ( 0x07UL << MDR_RST_CLK_TIMER1_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_1              ( 0x00UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_2              ( 0x01UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_4              ( 0x02UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_8              ( 0x03UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_16             ( 0x04UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_32             ( 0x05UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_64             ( 0x06UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER2_DIV_128            ( 0x07UL << MDR_RST_CLK_TIMER2_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_1              ( 0x00UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_2              ( 0x01UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_4              ( 0x02UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_8              ( 0x03UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_16             ( 0x04UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_32             ( 0x05UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_64             ( 0x06UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+#define MDR_RST_CLK_TIMER3_DIV_128            ( 0x07UL << MDR_RST_CLK_TIMER3_BRG_Pos )
+
+#define MDR_RST_CLK_CAN1_DIV_1              ( 0x00UL << MDR_RST_CLK_CAN1_BRG_Pos )
+#define MDR_RST_CLK_CAN1_DIV_2              ( 0x01UL << MDR_RST_CLK_CAN1_BRG_Pos )
+#define MDR_RST_CLK_CAN1_DIV_4              ( 0x02UL << MDR_RST_CLK_CAN1_BRG_Pos )
+#define MDR_RST_CLK_CAN1_DIV_8              ( 0x03UL << MDR_RST_CLK_CAN1_BRG_Pos )
+#define MDR_RST_CLK_CAN1_DIV_16             ( 0x04UL << MDR_RST_CLK_CAN1_BRG_Pos )
+#define MDR_RST_CLK_CAN1_DIV_32             ( 0x05UL << MDR_RST_CLK_CAN1_BRG_Pos )
+#define MDR_RST_CLK_CAN1_DIV_64             ( 0x06UL << MDR_RST_CLK_CAN1_BRG_Pos )
+#define MDR_RST_CLK_CAN1_DIV_128            ( 0x07UL << MDR_RST_CLK_CAN1_BRG_Pos )
+
+#define MDR_RST_CLK_CAN2_DIV_1              ( 0x00UL << MDR_RST_CLK_CAN2_BRG_Pos )
+#define MDR_RST_CLK_CAN2_DIV_2              ( 0x01UL << MDR_RST_CLK_CAN2_BRG_Pos )
+#define MDR_RST_CLK_CAN2_DIV_4              ( 0x02UL << MDR_RST_CLK_CAN2_BRG_Pos )
+#define MDR_RST_CLK_CAN2_DIV_8              ( 0x03UL << MDR_RST_CLK_CAN2_BRG_Pos )
+#define MDR_RST_CLK_CAN2_DIV_16             ( 0x04UL << MDR_RST_CLK_CAN2_BRG_Pos )
+#define MDR_RST_CLK_CAN2_DIV_32             ( 0x05UL << MDR_RST_CLK_CAN2_BRG_Pos )
+#define MDR_RST_CLK_CAN2_DIV_64             ( 0x06UL << MDR_RST_CLK_CAN2_BRG_Pos )
+#define MDR_RST_CLK_CAN2_DIV_128            ( 0x07UL << MDR_RST_CLK_CAN2_BRG_Pos )
+
+#define MDR_RST_CLK_SSP1_DIV_1              ( 0x00UL << MDR_RST_CLK_SSP1_BRG_Pos )
+#define MDR_RST_CLK_SSP1_DIV_2              ( 0x01UL << MDR_RST_CLK_SSP1_BRG_Pos )
+#define MDR_RST_CLK_SSP1_DIV_4              ( 0x02UL << MDR_RST_CLK_SSP1_BRG_Pos )
+#define MDR_RST_CLK_SSP1_DIV_8              ( 0x03UL << MDR_RST_CLK_SSP1_BRG_Pos )
+#define MDR_RST_CLK_SSP1_DIV_16             ( 0x04UL << MDR_RST_CLK_SSP1_BRG_Pos )
+#define MDR_RST_CLK_SSP1_DIV_32             ( 0x05UL << MDR_RST_CLK_SSP1_BRG_Pos )
+#define MDR_RST_CLK_SSP1_DIV_64             ( 0x06UL << MDR_RST_CLK_SSP1_BRG_Pos )
+#define MDR_RST_CLK_SSP1_DIV_128            ( 0x07UL << MDR_RST_CLK_SSP1_BRG_Pos )
+
+#define MDR_RST_CLK_SSP2_DIV_1              ( 0x00UL << MDR_RST_CLK_SSP2_BRG_Pos )
+#define MDR_RST_CLK_SSP2_DIV_2              ( 0x01UL << MDR_RST_CLK_SSP2_BRG_Pos )
+#define MDR_RST_CLK_SSP2_DIV_4              ( 0x02UL << MDR_RST_CLK_SSP2_BRG_Pos )
+#define MDR_RST_CLK_SSP2_DIV_8              ( 0x03UL << MDR_RST_CLK_SSP2_BRG_Pos )
+#define MDR_RST_CLK_SSP2_DIV_16             ( 0x04UL << MDR_RST_CLK_SSP2_BRG_Pos )
+#define MDR_RST_CLK_SSP2_DIV_32             ( 0x05UL << MDR_RST_CLK_SSP2_BRG_Pos )
+#define MDR_RST_CLK_SSP2_DIV_64             ( 0x06UL << MDR_RST_CLK_SSP2_BRG_Pos )
+#define MDR_RST_CLK_SSP2_DIV_128            ( 0x07UL << MDR_RST_CLK_SSP2_BRG_Pos )
+
+#define MDR_RST_CLK_UART1_CLK_DISABLE     ( 0UL << MDR_RST_CLK_UART1_CLK_EN_Pos )
+#define MDR_RST_CLK_UART1_CLK_ENABLE      ( 1UL << MDR_RST_CLK_UART1_CLK_EN_Pos )
+#define MDR_RST_CLK_UART2_CLK_DISABLE     ( 0UL << MDR_RST_CLK_UART2_CLK_EN_Pos )
+#define MDR_RST_CLK_UART2_CLK_ENABLE      ( 1UL << MDR_RST_CLK_UART2_CLK_EN_Pos )
+
+#define MDR_RST_CLK_TIMER1_CLK_DISABLE    ( 0UL << MDR_RST_CLK_TIMER1_CLK_EN_Pos )
+#define MDR_RST_CLK_TIMER1_CLK_ENABLE     ( 1UL << MDR_RST_CLK_TIMER1_CLK_EN_Pos )
+#define MDR_RST_CLK_TIMER2_CLK_DISABLE    ( 0UL << MDR_RST_CLK_TIMER2_CLK_EN_Pos )
+#define MDR_RST_CLK_TIMER2_CLK_ENABLE     ( 1UL << MDR_RST_CLK_TIMER2_CLK_EN_Pos )
+#define MDR_RST_CLK_TIMER3_CLK_DISABLE    ( 0UL << MDR_RST_CLK_TIMER3_CLK_EN_Pos )
+#define MDR_RST_CLK_TIMER3_CLK_ENABLE     ( 1UL << MDR_RST_CLK_TIMER3_CLK_EN_Pos )
+
+#define MDR_RST_CLK_CAN1_CLK_DISABLE      ( 0UL << MDR_RST_CLK_CAN1_CLK_EN_Pos )
+#define MDR_RST_CLK_CAN1_CLK_ENABLE       ( 1UL << MDR_RST_CLK_CAN1_CLK_EN_Pos )
+#define MDR_RST_CLK_CAN2_CLK_DISABLE      ( 0UL << MDR_RST_CLK_CAN2_CLK_EN_Pos )
+#define MDR_RST_CLK_CAN2_CLK_ENABLE       ( 1UL << MDR_RST_CLK_CAN2_CLK_EN_Pos )
+
+#define MDR_RST_CLK_SSP1_CLK_DISABLE      ( 0UL << MDR_RST_CLK_SSP1_CLK_EN_Pos )
+#define MDR_RST_CLK_SSP1_CLK_ENABLE       ( 1UL << MDR_RST_CLK_SSP1_CLK_EN_Pos )
+#define MDR_RST_CLK_SSP2_CLK_DISABLE      ( 0UL << MDR_RST_CLK_SSP2_CLK_EN_Pos )
+#define MDR_RST_CLK_SSP2_CLK_ENABLE       ( 1UL << MDR_RST_CLK_SSP2_CLK_EN_Pos )
+
+#define IS_MDR_RST_CLK_UART1_DIV(DIV)    (((DIV) & MDR_RST_CLK_UART1_BRG_Msk) <= MDR_RST_CLK_UART1_DIV_128)
+#define IS_MDR_RST_CLK_UART2_DIV(DIV)    (((DIV) & MDR_RST_CLK_UART2_BRG_Msk) <= MDR_RST_CLK_UART2_DIV_128)
+#define IS_MDR_RST_CLK_TIMER1_DIV(DIV)   (((DIV) & MDR_RST_CLK_TIMER1_BRG_Msk) <= MDR_RST_CLK_TIMER1_DIV_128)
+#define IS_MDR_RST_CLK_TIMER2_DIV(DIV)   (((DIV) & MDR_RST_CLK_TIMER2_BRG_Msk) <= MDR_RST_CLK_TIMER2_DIV_128)
+#define IS_MDR_RST_CLK_TIMER3_DIV(DIV)   (((DIV) & MDR_RST_CLK_TIMER3_BRG_Msk) <= MDR_RST_CLK_TIMER3_DIV_128)
+#define IS_MDR_RST_CLK_CAN1_DIV(DIV)     (((DIV) & MDR_RST_CLK_CAN1_BRG_Msk) <= MDR_RST_CLK_CAN1_DIV_128)
+#define IS_MDR_RST_CLK_CAN2_DIV(DIV)     (((DIV) & MDR_RST_CLK_CAN2_BRG_Msk) <= MDR_RST_CLK_CAN2_DIV_128)
+#define IS_MDR_RST_CLK_SSP1_DIV(DIV)     (((DIV) & MDR_RST_CLK_SSP1_BRG_Msk) <= MDR_RST_CLK_SSP1_DIV_128)
+#define IS_MDR_RST_CLK_SSP2_DIV(DIV)     (((DIV) & MDR_RST_CLK_SSP2_BRG_Msk) <= MDR_RST_CLK_SSP2_DIV_128)
+/** @} */
+
+/** @defgroup MDR_RST_CLK_Clock_State Generic clock state values
+ * @{
+ */
+#define MDR_RST_CLK_CLOCK_DISABLE    0UL
+#define MDR_RST_CLK_CLOCK_ENABLE     1UL
+
+#define IS_MDR_RST_CLK_CLOCK_STATE(STATE)    (((STATE) == MDR_RST_CLK_CLOCK_DISABLE) || ((STATE) == MDR_RST_CLK_CLOCK_ENABLE))
 /** @} */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -412,45 +609,41 @@ typedef enum
 /* Exported functions --------------------------------------------------------*/
 
 /**
- * @brief      Fills CPU clock configuration with safe reset-like defaults.
- * @param[out] config  Destination configuration structure.
+ * @brief Returns the default CPU clock configuration.
+ * @return Default CPU configuration structure.
  */
-void MDR_RST_CLK_CPU_StructInit(MDR_RST_CLK_CPU_InitTypeDef *config);
+MDR_RST_CLK_CPU_InitTypeDef MDR_RST_CLK_CPU_GetDefaultConfig(void);
 
 /**
- * @brief      Configures the complete CPU clock tree.
- * @param[in]  config  CPU clock configuration.
- * @return     Configuration status.
- * @warning    Flash wait states and DUCC regulator mode are not modified.
+ * @brief Configures the complete CPU clock tree.
+ * @param[in] config Pointer to CPU clock configuration.
+ * @return Configuration status.
  */
 MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_CPU_Init(const MDR_RST_CLK_CPU_InitTypeDef *config);
 
 /**
- * @brief      Fills USB clock configuration with safe defaults.
- * @param[out] config  Destination configuration structure.
+ * @brief Returns the default USB clock configuration.
+ * @return Default USB configuration structure.
  */
-void MDR_RST_CLK_USB_StructInit(MDR_RST_CLK_USB_InitTypeDef *config);
+MDR_RST_CLK_USB_InitTypeDef MDR_RST_CLK_USB_GetDefaultConfig(void);
 
 /**
- * @brief      Configures the complete USB clock tree and enables USB clock output.
- * @param[in]  config  USB clock configuration.
- * @return     Configuration status.
- * @note       The resulting USB clock frequency must satisfy the USB controller requirements.
+ * @brief Configures the complete USB clock tree.
+ * @param[in] config Pointer to USB clock configuration.
+ * @return Configuration status.
  */
 MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_USB_Init(const MDR_RST_CLK_USB_InitTypeDef *config);
 
 /**
- * @brief      Fills ADC clock configuration with defaults.
- * @param[out] config  Destination configuration structure.
- */
-void MDR_RST_CLK_ADC_StructInit(MDR_RST_CLK_ADC_InitTypeDef *config);
-
-/**
- * @brief      Configures the ADC clock tree and enables ADC_CLK.
- * @param[in]  config  ADC clock configuration.
+ * @brief      Configures the ADC clock tree in one call and enables ADC_CLK.
+ * @param[in]  adc_c1_source  ADC_C1 source from @ref MDR_RST_CLK_ADC_C1_Values.
+ * @param[in]  adc_c2_source  ADC_C2 source from @ref MDR_RST_CLK_ADC_C2_Values.
+ * @param[in]  adc_c3_div     ADC_C3 divider from @ref MDR_RST_CLK_ADC_C3_Div_Values.
  * @return     Configuration status.
  */
-MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_ADC_Init(const MDR_RST_CLK_ADC_InitTypeDef *config);
+MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_ADC_Init(	  uint32_t adc_c1_source,
+	                                              uint32_t adc_c2_source,
+	                                              uint32_t adc_c3_div );
 
 /** @brief Enables PCLK for the selected peripheral mask. */
 void MDR_RST_CLK_PeripheralEnable(uint32_t peripheral_mask);
@@ -537,13 +730,15 @@ void MDR_RST_CLK_RTC_HSI_ClockEnable(void);
 void MDR_RST_CLK_RTC_HSI_ClockDisable(void);
 
 /**
- * @brief      Fully configures and enables one UART clock.
+ * @brief      Configures one UART clock and selects its enabled state.
  * @param[in]  uart     UART selector.
  * @param[in]  divider  Divider code from @ref MDR_RST_CLK_Peripheral_Divider_Values.
+ * @param[in]  enable   Clock state from @ref MDR_RST_CLK_Peripheral_Clock_State.
  * @return     Configuration status.
  */
-MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_UART_Configure(MDR_RST_CLK_UART_TypeDef uart,
-	uint32_t divider);
+MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_UART_Configure(	MDR_UART_TypeDef *USARTx,
+	                                                    uint32_t divider,
+	                                                    uint32_t enable );
 
 /** @brief Sets UART1 clock divider. */
 void MDR_RST_CLK_UART1_SetDivider(uint32_t divider);
@@ -559,13 +754,15 @@ void MDR_RST_CLK_UART2_ClockEnable(void);
 void MDR_RST_CLK_UART2_ClockDisable(void);
 
 /**
- * @brief      Fully configures and enables one general-purpose timer clock.
+ * @brief      Configures one general-purpose timer clock and selects its enabled state.
  * @param[in]  timer    Timer selector.
  * @param[in]  divider  Divider code from @ref MDR_RST_CLK_Peripheral_Divider_Values.
+ * @param[in]  enable   Clock state from @ref MDR_RST_CLK_Peripheral_Clock_State.
  * @return     Configuration status.
  */
-MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_TIMER_Configure(MDR_RST_CLK_TIMER_TypeDef timer,
-	uint32_t divider);
+MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_TIMER_Configure(	 MDR_TIMER_TypeDef *TIMERx,
+	                                                     uint32_t divider,
+	                                                     uint32_t enable);
 
 void MDR_RST_CLK_TIMER1_SetDivider(uint32_t divider);
 void MDR_RST_CLK_TIMER1_ClockEnable(void);
@@ -578,13 +775,16 @@ void MDR_RST_CLK_TIMER3_ClockEnable(void);
 void MDR_RST_CLK_TIMER3_ClockDisable(void);
 
 /**
- * @brief      Fully configures and enables one CAN clock.
+ * @brief      Configures one CAN clock and selects its enabled state.
  * @param[in]  can      CAN selector.
  * @param[in]  divider  Divider code from @ref MDR_RST_CLK_Peripheral_Divider_Values.
+ * @param[in]  enable   Clock state from @ref MDR_RST_CLK_Peripheral_Clock_State.
  * @return     Configuration status.
+ * @note       Enabling performs both PER_CLOCK PCLK enable and CANx_CLK enable.
  */
-MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_CAN_Configure(MDR_RST_CLK_CAN_TypeDef can,
-	uint32_t divider);
+MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_CAN_Configure(   MDR_CAN_TypeDef *CANx,
+	                                                   uint32_t divider,
+	                                                   uint32_t enable );
 
 void MDR_RST_CLK_CAN1_SetDivider(uint32_t divider);
 void MDR_RST_CLK_CAN1_ClockEnable(void);
@@ -594,13 +794,15 @@ void MDR_RST_CLK_CAN2_ClockEnable(void);
 void MDR_RST_CLK_CAN2_ClockDisable(void);
 
 /**
- * @brief      Fully configures and enables one SSP clock.
+ * @brief      Configures one SSP clock and selects its enabled state.
  * @param[in]  ssp      SSP selector.
  * @param[in]  divider  Divider code from @ref MDR_RST_CLK_Peripheral_Divider_Values.
+ * @param[in]  enable   Clock state from @ref MDR_RST_CLK_Peripheral_Clock_State.
  * @return     Configuration status.
  */
-MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_SSP_Configure(MDR_RST_CLK_SSP_TypeDef ssp,
-	uint32_t divider);
+MDR_RST_CLK_StatusTypeDef MDR_RST_CLK_SSP_Configure(   MDR_SSP_TypeDef *SSPx,
+	                                                   uint32_t divider,
+	                                                   uint32_t enable);
 
 void MDR_RST_CLK_SSP1_SetDivider(uint32_t divider);
 void MDR_RST_CLK_SSP1_ClockEnable(void);
