@@ -1,154 +1,268 @@
+/** ****************************************************************************
+ * @file    MILUINO_MDR_SYSTICK.c
+ * @brief   SysTick driver implementation for Cortex-M3 in Milandr K1986BE92/94
+ * @author  Max @maxdev
+ * @author  Roma @r3m4k
+ *
+ * @date    September 2026
+ *
+ * @details Implements SysTick control through a private union register map.
+ * ************************************************************************** */
+
+/* Includes ------------------------------------------------------------------*/
 #include "MILUINO_MDR_SYSTICK.h"
 
-#include <stdint.h>
+/* Private typedef -----------------------------------------------------------*/
 
-// SysTick Union functions
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/* CTRL register */
+#define SYSTICK_ENABLE_DISABLE_VAL       0UL
+#define SYSTICK_ENABLE_ENABLE_VAL        1UL
 
-void MDR_SYSTICK_Union_Enable( void )
+#define SYSTICK_TICKINT_DISABLE_VAL      0UL
+#define SYSTICK_TICKINT_ENABLE_VAL       1UL
+
+#define SYSTICK_CLKSOURCE_HCLK_DIV8_VAL  0UL
+#define SYSTICK_CLKSOURCE_HCLK_VAL       1UL
+
+#define SYSTICK_COUNTFLAG_RESET_VAL      0UL
+#define SYSTICK_COUNTFLAG_SET_VAL        1UL
+
+typedef union
 {
-    MDR_SYSTICK_UNION->CTRL.Register |= MDR_SYSTICK_CTRL_ENABLE_ENABLE;
+	uint32_t Register; /* 32 bits */
+	struct
+	{
+		uint32_t ENABLE    : 1;
+		uint32_t TICKINT   : 1;
+		uint32_t CLKSOURCE : 1;
+		uint32_t Reserved0 : 13;
+		uint32_t COUNTFLAG : 1;
+		uint32_t Reserved1 : 15;
+	} Bits;
+} MDR_SYSTICK_CTRL_UnionTypeDef;
+
+/* LOAD register */
+#define SYSTICK_RELOAD_ZERO_VAL          0UL
+
+typedef union
+{
+	uint32_t Register; /* 32 bits */
+	struct
+	{
+		uint32_t RELOAD    : 24;
+		uint32_t Reserved0 : 8;
+	} Bits;
+} MDR_SYSTICK_LOAD_UnionTypeDef;
+
+/* VAL register */
+#define SYSTICK_CURRENT_CLEAR_VAL        0UL
+
+typedef union
+{
+	uint32_t Register; /* 32 bits */
+	struct
+	{
+		uint32_t CURRENT   : 24;
+		uint32_t Reserved0 : 8;
+	} Bits;
+} MDR_SYSTICK_VAL_UnionTypeDef;
+
+/* CALIB register */
+#define SYSTICK_SKEW_EXACT_VAL           0UL
+#define SYSTICK_SKEW_INEXACT_VAL         1UL
+
+#define SYSTICK_NOREF_AVAILABLE_VAL      0UL
+#define SYSTICK_NOREF_UNAVAILABLE_VAL    1UL
+
+typedef union
+{
+	uint32_t Register; /* 32 bits */
+	struct
+	{
+		uint32_t TENMS     : 24;
+		uint32_t Reserved0 : 6;
+		uint32_t SKEW      : 1;
+		uint32_t NOREF     : 1;
+	} Bits;
+} MDR_SYSTICK_CALIB_UnionTypeDef;
+
+typedef struct
+{
+	volatile MDR_SYSTICK_CTRL_UnionTypeDef  CTRL;
+	volatile MDR_SYSTICK_LOAD_UnionTypeDef  LOAD;
+	volatile MDR_SYSTICK_VAL_UnionTypeDef   VAL;
+	volatile MDR_SYSTICK_CALIB_UnionTypeDef CALIB;
+} MDR_SYSTICK_RegisterMapTypeDef;
+
+/* Private define ------------------------------------------------------------*/
+#define MDR_SYSTICK_BASE_ADDRESS         0xE000E010UL
+#define MDR_SYSTICK_MAX_TICKS            0x01000000UL
+#define MDR_SYSTICK_US_PER_SECOND        1000000UL
+
+/* Private macro -------------------------------------------------------------*/
+
+/* Private variables ---------------------------------------------------------*/
+static volatile MDR_SYSTICK_RegisterMapTypeDef *const SYSTICK_UNION =
+	(volatile MDR_SYSTICK_RegisterMapTypeDef *)MDR_SYSTICK_BASE_ADDRESS;
+
+/* Private function prototypes -----------------------------------------------*/
+
+/* Private functions ---------------------------------------------------------*/
+
+/* Exported functions --------------------------------------------------------*/
+
+// -----------------------------------------------------------------------------
+// SysTick control
+// -----------------------------------------------------------------------------
+void MDR_SYSTICK_Enable(void)
+{
+
+	SYSTICK_UNION->CTRL.Bits.ENABLE = SYSTICK_ENABLE_ENABLE_VAL;
 }
 
-void MDR_SYSTICK_Union_Disable( void )
+void MDR_SYSTICK_Disable(void)
 {
-    MDR_SYSTICK_UNION->CTRL.Register &= MDR_SYSTICK_CTRL_ENABLE_DISABLE;
+
+	SYSTICK_UNION->CTRL.Bits.ENABLE = SYSTICK_ENABLE_DISABLE_VAL;
 }
 
-void MDR_SYSTICK_Union_SetClockSource( uint32_t clock_source )
+void MDR_SYSTICK_SetClockSource(uint32_t clock_source)
 {
-    MDR_SYSTICK_UNION->CTRL.Register &= ~MDR_SYSTICK_CTRL_CLKSOURCE_MSK;
-    MDR_SYSTICK_UNION->CTRL.Register |= ( clock_source & MDR_SYSTICK_CTRL_CLKSOURCE_MSK );
+
+	if (clock_source == MDR_SYSTICK_CTRL_CLKSOURCE_HCLK)
+	{
+		SYSTICK_UNION->CTRL.Bits.CLKSOURCE = SYSTICK_CLKSOURCE_HCLK_VAL;
+	}
+	else
+	{
+		SYSTICK_UNION->CTRL.Bits.CLKSOURCE = SYSTICK_CLKSOURCE_HCLK_DIV8_VAL;
+	}
 }
 
-void MDR_SYSTICK_Union_InterruptEnable( void )
+void MDR_SYSTICK_InterruptEnable(void)
 {
-    MDR_SYSTICK_UNION->CTRL.Register |= MDR_SYSTICK_CTRL_TICKINT_REQUEST;
+
+	SYSTICK_UNION->CTRL.Bits.TICKINT = SYSTICK_TICKINT_ENABLE_VAL;
 }
 
-void MDR_SYSTICK_Union_InterruptDisable( void )
+void MDR_SYSTICK_InterruptDisable(void)
 {
-    MDR_SYSTICK_UNION->CTRL.Register &= MDR_SYSTICK_CTRL_TICKINT_NO_REQUEST;
+
+	SYSTICK_UNION->CTRL.Bits.TICKINT = SYSTICK_TICKINT_DISABLE_VAL;
 }
 
-void MDR_SYSTICK_Union_SetReload( uint32_t reload )
+// -----------------------------------------------------------------------------
+// SysTick counter
+// -----------------------------------------------------------------------------
+void MDR_SYSTICK_SetReload(uint32_t reload)
 {
-    MDR_SYSTICK_UNION->LOAD.Register &= ~MDR_SYSTICK_LOAD_RELOAD_MSK;
-    MDR_SYSTICK_UNION->LOAD.Register |= ( MDR_SYSTICK_LOAD_RELOAD_VALUE( reload ) & MDR_SYSTICK_LOAD_RELOAD_MSK );
+
+	if (IS_MDR_SYSTICK_RELOAD(reload) != 0UL)
+	{
+		SYSTICK_UNION->LOAD.Bits.RELOAD = reload;
+	}
 }
 
-uint32_t MDR_SYSTICK_Union_GetReload( void )
+uint32_t MDR_SYSTICK_GetReload(void)
 {
-    return ( MDR_SYSTICK_UNION->LOAD.Register & MDR_SYSTICK_LOAD_RELOAD_MSK );
+
+	return SYSTICK_UNION->LOAD.Bits.RELOAD;
 }
 
-void MDR_SYSTICK_Union_ClearCurrent( void )
+void MDR_SYSTICK_ClearCurrent(void)
 {
-    MDR_SYSTICK_UNION->VAL.Register = 0;
+
+	SYSTICK_UNION->VAL.Bits.CURRENT = SYSTICK_CURRENT_CLEAR_VAL;
 }
 
-uint32_t MDR_SYSTICK_Union_GetCurrent( void )
+uint32_t MDR_SYSTICK_GetCurrent(void)
 {
-    return ( MDR_SYSTICK_UNION->VAL.Register & MDR_SYSTICK_VAL_CURRENT_MSK );
+
+	return SYSTICK_UNION->VAL.Bits.CURRENT;
 }
 
-uint8_t MDR_SYSTICK_Union_GetCountFlag( void )
+uint32_t MDR_SYSTICK_GetCountFlag(void)
 {
-    return ( ( MDR_SYSTICK_UNION->CTRL.Register & MDR_SYSTICK_CTRL_COUNTFLAG_MSK ) != 0 );
+
+	if (SYSTICK_UNION->CTRL.Bits.COUNTFLAG == SYSTICK_COUNTFLAG_SET_VAL)
+	{
+		return 1UL;
+	}
+
+	return 0UL;
 }
 
-// SysTick CMSIS functions
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-void MDR_SYSTICK_Enable( void )
+// -----------------------------------------------------------------------------
+// SysTick calibration
+// -----------------------------------------------------------------------------
+uint32_t MDR_SYSTICK_GetTenMsCalibration(void)
 {
-    SysTick->CTRL |= MDR_SYSTICK_CTRL_ENABLE_ENABLE;
+
+	return SYSTICK_UNION->CALIB.Bits.TENMS;
 }
 
-void MDR_SYSTICK_Disable( void )
+uint32_t MDR_SYSTICK_IsCalibrationSkewed(void)
 {
-    SysTick->CTRL &= MDR_SYSTICK_CTRL_ENABLE_DISABLE;
+
+	if (SYSTICK_UNION->CALIB.Bits.SKEW == SYSTICK_SKEW_INEXACT_VAL)
+	{
+		return 1UL;
+	}
+
+	return 0UL;
 }
 
-void MDR_SYSTICK_SetClockSource( uint32_t clock_source )
+uint32_t MDR_SYSTICK_IsReferenceUnavailable(void)
 {
-    SysTick->CTRL &= ~MDR_SYSTICK_CTRL_CLKSOURCE_MSK;
-    SysTick->CTRL |= ( clock_source & MDR_SYSTICK_CTRL_CLKSOURCE_MSK );
+
+	if (SYSTICK_UNION->CALIB.Bits.NOREF == SYSTICK_NOREF_UNAVAILABLE_VAL)
+	{
+		return 1UL;
+	}
+
+	return 0UL;
 }
 
-void MDR_SYSTICK_InterruptEnable( void )
+// -----------------------------------------------------------------------------
+// SysTick delay
+// -----------------------------------------------------------------------------
+void MDR_SYSTICK_DelayUs(uint32_t microseconds, uint32_t hclk_hz)
 {
-    SysTick->CTRL |= MDR_SYSTICK_CTRL_TICKINT_REQUEST;
-}
 
-void MDR_SYSTICK_InterruptDisable( void )
-{
-    SysTick->CTRL &= MDR_SYSTICK_CTRL_TICKINT_NO_REQUEST;
-}
+	uint64_t ticks;
+	uint32_t current_ticks;
 
-void MDR_SYSTICK_SetReload( uint32_t reload )
-{
-    SysTick->LOAD &= ~MDR_SYSTICK_LOAD_RELOAD_MSK;
-    SysTick->LOAD |= ( MDR_SYSTICK_LOAD_RELOAD_VALUE( reload ) & MDR_SYSTICK_LOAD_RELOAD_MSK );
-}
+	ticks = ((uint64_t)hclk_hz * microseconds) / MDR_SYSTICK_US_PER_SECOND;
 
-uint32_t MDR_SYSTICK_GetReload( void )
-{
-    return ( SysTick->LOAD & MDR_SYSTICK_LOAD_RELOAD_MSK );
-}
+	if (ticks == 0UL)
+	{
+		return;
+	}
 
-void MDR_SYSTICK_ClearCurrent( void )
-{
-    SysTick->VAL = 0;
-}
+	MDR_SYSTICK_SetClockSource(MDR_SYSTICK_CTRL_CLKSOURCE_HCLK);
+	MDR_SYSTICK_InterruptDisable();
 
-uint32_t MDR_SYSTICK_GetCurrent( void )
-{
-    return ( SysTick->VAL & MDR_SYSTICK_VAL_CURRENT_MSK );
-}
+	while (ticks != 0UL)
+	{
+		if (ticks > MDR_SYSTICK_MAX_TICKS)
+		{
+			current_ticks = MDR_SYSTICK_MAX_TICKS;
+		}
+		else
+		{
+			current_ticks = (uint32_t)ticks;
+		}
 
-uint8_t MDR_SYSTICK_GetCountFlag( void )
-{
-    return ( ( SysTick->CTRL & MDR_SYSTICK_CTRL_COUNTFLAG_MSK ) != 0 );
-}
+		MDR_SYSTICK_SetReload(current_ticks - 1UL);
+		MDR_SYSTICK_ClearCurrent();
+		MDR_SYSTICK_Enable();
 
+		while (MDR_SYSTICK_GetCountFlag() == 0UL)
+		{
+		}
 
-void MDR_SYSTICK_DelayUs( uint32_t microseconds, uint32_t hclk_hz )
-{
-    uint64_t ticks;
-    uint32_t current_ticks;
+		MDR_SYSTICK_Disable();
 
-    ticks = ( ( uint64_t )hclk_hz * microseconds ) / 1000000;
-
-    if ( ticks == 0 )
-    {
-        return;
-    }
-
-    MDR_SYSTICK_SetClockSource( MDR_SYSTICK_CTRL_CLKSOURCE_HCLK );
-    MDR_SYSTICK_InterruptDisable();
-
-    while ( ticks != 0 )
-    {
-        if ( ticks > 0x01000000 )
-        {
-            current_ticks = 0x01000000;
-        }
-        else
-        {
-            current_ticks = ( uint32_t )ticks;
-        }
-
-        MDR_SYSTICK_SetReload( current_ticks - 1 );
-        MDR_SYSTICK_ClearCurrent();
-        MDR_SYSTICK_Enable();
-
-        while ( MDR_SYSTICK_GetCountFlag() == 0 )
-        {
-        }
-
-        MDR_SYSTICK_Disable();
-
-        ticks -= current_ticks;
-    }
+		ticks -= current_ticks;
+	}
 }
